@@ -6,26 +6,26 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-// ColorSelector Å¬·¡½º´Â JFrameÀ» »ó¼ÓÇÏ¸ç, °¢ ÇÃ·¹ÀÌ¾î°¡ ¿À¸ñ °ÔÀÓ¿¡¼­ »ç¿ëÇÒ »ö»óÀ» ¼±ÅÃÇÒ ¼ö ÀÖµµ·Ï ÇÏ´Â UI¸¦ Á¦°øÇÑ´Ù.
+// ColorSelector í´ë˜ìŠ¤ëŠ” JFrameì„ ìƒì†í•˜ë©°, ê° í”Œë ˆì´ì–´ê°€ ì˜¤ëª© ê²Œì„ì—ì„œ ì‚¬ìš©í•  ìƒ‰ìƒì„ ì„ íƒí•  ìˆ˜ ìˆë„ë¡ í•˜ëŠ” UIë¥¼ ì œê³µí•œë‹¤.
 public class ColorSelector extends JFrame {
-    private int playerCount; // ÇÃ·¹ÀÌ¾î ¼ö
-    private int mapSize; // º¸µå Å©±â
-    private ArrayList<Color> selectedColors; // ¼±ÅÃµÈ »ö»óÀ» ÀúÀåÇÏ´Â ¸®½ºÆ®
-    private int currentPlayer; // ÇöÀç »ö»óÀ» ¼±ÅÃ ÁßÀÎ ÇÃ·¹ÀÌ¾î
+    private int playerCount; // í”Œë ˆì´ì–´ ìˆ˜
+    private int mapSize; // ë³´ë“œ í¬ê¸°
+    private ArrayList<Color> selectedColors; // ì„ íƒëœ ìƒ‰ìƒì„ ì €ì¥í•˜ëŠ” ë¦¬ìŠ¤íŠ¸
+    private int currentPlayer; // í˜„ì¬ ìƒ‰ìƒì„ ì„ íƒ ì¤‘ì¸ í”Œë ˆì´ì–´
 
-    // »ı¼ºÀÚ: ÇÃ·¹ÀÌ¾î ¼ö¿Í º¸µå Å©±â¸¦ ¹Ş¾Æ »ö»ó ¼±ÅÃ Ã¢À» ÃÊ±âÈ­ÇÕ´Ï´Ù.
+    // ìƒì„±ì: í”Œë ˆì´ì–´ ìˆ˜ì™€ ë³´ë“œ í¬ê¸°ë¥¼ ë°›ì•„ ìƒ‰ìƒ ì„ íƒ ì°½ì„ ì´ˆê¸°í™”í•©ë‹ˆë‹¤.
     public ColorSelector(int playerCount, int mapSize) {
         this.playerCount = playerCount;
         this.mapSize = mapSize;
         this.selectedColors = new ArrayList<>();
         this.currentPlayer = 1;
         
-        // Ã¢ÀÇ Á¦¸ñ°ú ÃÊ±â À§Ä¡, Å©±â¸¦ ¼³Á¤ÇÕ´Ï´Ù.
+        // ì°½ì˜ ì œëª©ê³¼ ì´ˆê¸° ìœ„ì¹˜, í¬ê¸°ë¥¼ ì„¤ì •í•©ë‹ˆë‹¤.
         setTitle("Player " + currentPlayer + " Choose Color");
         setBounds(200, 100, 400, 200);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
-        // ³»¿ë ÆÒ¿¡ ·¹ÀÌ¾Æ¿ôÀ» ¼³Á¤ÇÏ°í »ö»ó ¼±ÅÃ ¹öÆ°À» Ãß°¡ÇÕ´Ï´Ù.
+        // ë‚´ìš© íŒ¬ì— ë ˆì´ì•„ì›ƒì„ ì„¤ì •í•˜ê³  ìƒ‰ìƒ ì„ íƒ ë²„íŠ¼ì„ ì¶”ê°€í•©ë‹ˆë‹¤.
         Container c = getContentPane();
         c.setLayout(new GridLayout(3, 1));
 
@@ -33,37 +33,37 @@ public class ColorSelector extends JFrame {
         JButton blueButton = new JButton("WHITE");
         JButton greenButton = new JButton("BLUE");
 
-        // °¢ ¹öÆ°¿¡ ¾×¼Ç ¸®½º³Ê¸¦ Ãß°¡ÇÕ´Ï´Ù.
+        // ê° ë²„íŠ¼ì— ì•¡ì…˜ ë¦¬ìŠ¤ë„ˆë¥¼ ì¶”ê°€í•©ë‹ˆë‹¤.
         redButton.addActionListener(new ColorButtonAction(Color.BLACK, "BLACK"));
         blueButton.addActionListener(new ColorButtonAction(Color.WHITE, "WHITE"));
         greenButton.addActionListener(new ColorButtonAction(Color.BLUE, "BLUE"));
 
-        // ¹öÆ°À» ³»¿ë ÆÒ¿¡ Ãß°¡ÇÕ´Ï´Ù.
+        // ë²„íŠ¼ì„ ë‚´ìš© íŒ¬ì— ì¶”ê°€í•©ë‹ˆë‹¤.
         c.add(redButton);
         c.add(blueButton);
         c.add(greenButton);
 
-        setVisible(true); // Ã¢À» Ç¥½ÃÇÕ´Ï´Ù.
+        setVisible(true); // ì°½ì„ í‘œì‹œí•©ë‹ˆë‹¤.
     }
 
-    // ColorButtonAction Å¬·¡½º´Â ¹öÆ° Å¬¸¯ ½Ã »ö»óÀ» ¼±ÅÃÇÏ´Â ¾×¼Ç ¸®½º³Ê¸¦ Á¤ÀÇÇÕ´Ï´Ù.
+    // ColorButtonAction í´ë˜ìŠ¤ëŠ” ë²„íŠ¼ í´ë¦­ ì‹œ ìƒ‰ìƒì„ ì„ íƒí•˜ëŠ” ì•¡ì…˜ ë¦¬ìŠ¤ë„ˆë¥¼ ì •ì˜í•©ë‹ˆë‹¤.
     private class ColorButtonAction implements ActionListener {
-        private Color color; // ¼±ÅÃÇÒ »ö»ó
-        private String colorName; // »ö»ó ÀÌ¸§
+        private Color color; // ì„ íƒí•  ìƒ‰ìƒ
+        private String colorName; // ìƒ‰ìƒ ì´ë¦„
 
-        // »ı¼ºÀÚ: »ö»ó°ú »ö»ó ÀÌ¸§À» ¹Ş¾Æ ÃÊ±âÈ­ÇÕ´Ï´Ù.
+        // ìƒì„±ì: ìƒ‰ìƒê³¼ ìƒ‰ìƒ ì´ë¦„ì„ ë°›ì•„ ì´ˆê¸°í™”í•©ë‹ˆë‹¤.
         public ColorButtonAction(Color color, String colorName) {
             this.color = color;
             this.colorName = colorName;
         }
 
-        // actionPerformed ¸Ş¼Òµå: ¹öÆ° Å¬¸¯ ½Ã È£ÃâµÇ¾î »ö»óÀ» ¼±ÅÃÇÕ´Ï´Ù.
+        // actionPerformed ë©”ì†Œë“œ: ë²„íŠ¼ í´ë¦­ ì‹œ í˜¸ì¶œë˜ì–´ ìƒ‰ìƒì„ ì„ íƒí•©ë‹ˆë‹¤.
         public void actionPerformed(ActionEvent e) {
-            // ÀÌ¹Ì ¼±ÅÃµÈ »ö»óÀÌ ¾Æ´Ñ °æ¿ì »ö»óÀ» Ãß°¡ÇÏ°í ´ÙÀ½ ÇÃ·¹ÀÌ¾î·Î ÀÌµ¿ÇÕ´Ï´Ù.
+            // ì´ë¯¸ ì„ íƒëœ ìƒ‰ìƒì´ ì•„ë‹Œ ê²½ìš° ìƒ‰ìƒì„ ì¶”ê°€í•˜ê³  ë‹¤ìŒ í”Œë ˆì´ì–´ë¡œ ì´ë™í•©ë‹ˆë‹¤.
             if (!selectedColors.contains(color)) {
                 selectedColors.add(color);
                 if (currentPlayer == playerCount) {
-                    // ¸ğµç ÇÃ·¹ÀÌ¾î°¡ »ö»óÀ» ¼±ÅÃÇÑ °æ¿ì °ÔÀÓ UI¸¦ »ı¼ºÇÏ°í Ã¢À» ´İ½À´Ï´Ù.
+                    // ëª¨ë“  í”Œë ˆì´ì–´ê°€ ìƒ‰ìƒì„ ì„ íƒí•œ ê²½ìš° ê²Œì„ UIë¥¼ ìƒì„±í•˜ê³  ì°½ì„ ë‹«ìŠµë‹ˆë‹¤.
                     new GUI(selectedColors, mapSize);
                     dispose();
                 } else {
@@ -71,7 +71,7 @@ public class ColorSelector extends JFrame {
                     setTitle("Player " + currentPlayer + " Choose Color");
                 }
             } else {
-                // ÀÌ¹Ì ¼±ÅÃµÈ »ö»óÀÎ °æ¿ì °æ°í ¸Ş½ÃÁö¸¦ Ç¥½ÃÇÕ´Ï´Ù.
+                // ì´ë¯¸ ì„ íƒëœ ìƒ‰ìƒì¸ ê²½ìš° ê²½ê³  ë©”ì‹œì§€ë¥¼ í‘œì‹œí•©ë‹ˆë‹¤.
                 JOptionPane.showMessageDialog(null, colorName + " is already selected", "", JOptionPane.WARNING_MESSAGE);
             }
         }
