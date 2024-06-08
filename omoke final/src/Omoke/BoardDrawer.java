@@ -8,72 +8,135 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import java.util.ArrayList;
 
-// BoardDrawer Å¬·¡½º´Â JPanelÀ» »ó¼ÓÇÏ¸ç, ¿À¸ñ °ÔÀÓÀÇ º¸µå¿Í µ¹À» ±×¸®´Â ¿ªÇÒÀ» ´ã´çÇÕ´Ï´Ù.
+// BoardDrawer í´ë˜ìŠ¤ëŠ” JPanelì„ ìƒì†í•˜ë©°, ì˜¤ëª© ê²Œì„ì˜ ë³´ë“œì™€ ëŒì„ ê·¸ë¦¬ëŠ” ì—­í• ì„ ë‹´ë‹¹í•©ë‹ˆë‹¤.
 @SuppressWarnings("serial")
 public class BoardDrawer extends JPanel {
-    private SizeOfMap size; // º¸µåÀÇ Å©±â¸¦ ÀúÀåÇÏ´Â °´Ã¼
-    private Map map; // °ÔÀÓ »óÅÂ¸¦ ÀúÀåÇÏ´Â ¸Ê °´Ã¼
-    private final int STONE_SIZE = 28; // µ¹ÀÇ Å©±â
-    private JButton resetButton; // º¸µå¸¦ ÃÊ±âÈ­ÇÏ´Â ¹öÆ°
-    private ArrayList<Color> playerColors; // ÇÃ·¹ÀÌ¾îº° µ¹ »ö»óÀ» ÀúÀåÇÏ´Â ¸®½ºÆ®
+    private SizeOfMap size; // ë³´ë“œì˜ í¬ê¸°ë¥¼ ì €ì¥í•˜ëŠ” ê°ì²´
+    private Map map; // ê²Œì„ ìƒíƒœë¥¼ ì €ì¥í•˜ëŠ” ë§µ ê°ì²´
+    private final int STONE_SIZE = 28; // ëŒì˜ í¬ê¸°
+    private JButton resetButton; // ë³´ë“œë¥¼ ì´ˆê¸°í™”í•˜ëŠ” ë²„íŠ¼
+    private ArrayList<Color> playerColors; // í”Œë ˆì´ì–´ë³„ ëŒ ìƒ‰ìƒì„ ì €ì¥í•˜ëŠ” ë¦¬ìŠ¤íŠ¸
 
-    // »ı¼ºÀÚ: º¸µåÀÇ Å©±â, °ÔÀÓ »óÅÂ ¸Ê, ÇÃ·¹ÀÌ¾î »ö»ó ¸®½ºÆ®¸¦ ¹Ş¾Æ ÃÊ±âÈ­ ÇÑ´Ù
+    // ìƒì„±ì: ë³´ë“œì˜ í¬ê¸°, ê²Œì„ ìƒíƒœ ë§µ, í”Œë ˆì´ì–´ ìƒ‰ìƒ ë¦¬ìŠ¤íŠ¸ë¥¼ ë°›ì•„ ì´ˆê¸°í™” í•œë‹¤
     public BoardDrawer(SizeOfMap m, Map map, ArrayList<Color> playerColors) {
-        setBackground((Color.lightGray)); // º¸µå ¹è°æ»ö ¼³Á¤
-        /***
-         *       ±âÁ¸ ÄÚµå:   setBackground(new Color(206, 167, 61)); // º¸µå ¹è°æ»ö ¼³Á¤
-         *       
-         */
+        initializeBackground(); // ë°°ê²½ ì´ˆê¸°í™”
+        initializeSize(m); // ë³´ë“œ í¬ê¸° ì´ˆê¸°í™”
+        initializeLayout(); // ë ˆì´ì•„ì›ƒ ì´ˆê¸°í™”
+        initializeMap(map); // ê²Œì„ ìƒíƒœ ë§µ ì´ˆê¸°í™”
+        initializePlayerColors(playerColors); // í”Œë ˆì´ì–´ ìƒ‰ìƒ ì´ˆê¸°í™”
+        initializeResetButton(); // ë¦¬ì…‹ ë²„íŠ¼ ì´ˆê¸°í™”
+        setupResetButtonAction(); // ë¦¬ì…‹ ë²„íŠ¼ ì•¡ì…˜ ì„¤ì •
+    }
+
+    private void initializeBackground() {
+        // ë³´ë“œ ë°°ê²½ìƒ‰ì„ ì„¤ì •í•©ë‹ˆë‹¤.
+        setBackground(Color.lightGray);
+    }
+
+    private void initializeSize(SizeOfMap m) {
+        // ë³´ë“œì˜ í¬ê¸°ë¥¼ ì´ˆê¸°í™”í•©ë‹ˆë‹¤.
         size = m;
-        setLayout(null); // ·¹ÀÌ¾Æ¿ô ¸Å´ÏÀú ¼³Á¤
+    }
+
+    private void initializeLayout() {
+        // ë ˆì´ì•„ì›ƒ ë§¤ë‹ˆì €ë¥¼ ì„¤ì •í•˜ì§€ ì•ŠëŠ”ë‹¤.
+        setLayout(null);
+    }
+
+    private void initializeMap(Map map) {
+        // ê²Œì„ ìƒíƒœ ë§µì„ ì´ˆê¸°í™”í•©ë‹ˆë‹¤.
         this.map = map;
+    }
+
+    private void initializePlayerColors(ArrayList<Color> playerColors) {
+        // í”Œë ˆì´ì–´ë³„ ëŒ ìƒ‰ìƒì„ ì´ˆê¸°í™”í•©ë‹ˆë‹¤.
         this.playerColors = playerColors;
+    }
 
-        resetButton = new JButton("Reset"); // ¸®¼Â ¹öÆ° »ı¼º
-        resetButton.setBounds(280, 615, 80, 30); // ¸®¼Â ¹öÆ° À§Ä¡¿Í Å©±â ¼³Á¤
-        add(resetButton); // ¸®¼Â ¹öÆ°À» ÆĞ³Î¿¡ Ãß°¡
+    private void initializeResetButton() {
+        // ë¦¬ì…‹ ë²„íŠ¼ì„ ìƒì„±í•©ë‹ˆë‹¤.
+        resetButton = new JButton("Reset");
 
-        // ¸®¼Â ¹öÆ°¿¡ ¾×¼Ç ¸®½º³Ê Ãß°¡: Å¬¸¯ ½Ã º¸µå¸¦ ÃÊ±âÈ­ÇÏ°í Ã³À½ºÎÅÍ ½ÃÀÛÇÒ ¼ö ÀÖµµ·Ï ÇÑ´Ù.
+        // ë¦¬ì…‹ ë²„íŠ¼ì˜ ìœ„ì¹˜ì™€ í¬ê¸°ë¥¼ ì„¤ì •í•©ë‹ˆë‹¤.
+        resetButton.setBounds(280, 615, 80, 30);
+
+        // ë¦¬ì…‹ ë²„íŠ¼ì„ íŒ¨ë„ì— ì¶”ê°€í•©ë‹ˆë‹¤.
+        add(resetButton);
+    }
+
+    private void setupResetButtonAction() {
+        // ë¦¬ì…‹ ë²„íŠ¼ì— ì•¡ì…˜ ë¦¬ìŠ¤ë„ˆë¥¼ ì¶”ê°€í•©ë‹ˆë‹¤. í´ë¦­ ì‹œ ë³´ë“œë¥¼ ì´ˆê¸°í™”í•˜ê³  ì²˜ìŒë¶€í„° ì‹œì‘í•  ìˆ˜ ìˆë„ë¡ í•©ë‹ˆë‹¤.
         resetButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                map.clear(); // ¸Ê ÃÊ±âÈ­
-                repaint(); // º¸µå ´Ù½Ã ±×¸®±â - ´Ù½Ã µ¹À» ³õÀ» ¼ö ÀÖ°Ô ÇÑ´Ù.
+                // ë§µì„ ì´ˆê¸°í™”í•©ë‹ˆë‹¤.
+                map.clear();
+
+                // ë³´ë“œë¥¼ ë‹¤ì‹œ ê·¸ë¦½ë‹ˆë‹¤.
+                repaint();
             }
         });
     }
 
-    // paintComponent ¸Ş¼Òµå: º¸µå¸¦ ±×¸®°í µ¹À» ±×¸³´Ï´Ù.
+    // paintComponent ë©”ì†Œë“œ: ë³´ë“œë¥¼ ê·¸ë¦¬ê³  ëŒì„ ê·¸ë¦½ë‹ˆë‹¤.
     @Override
     public void paintComponent(Graphics g) {
-        super.paintComponent(g); // ºÎ¸ğ Å¬·¡½ºÀÇ paintComponent È£Ãâ
-        g.setColor(Color.BLACK); // ¼± »ö»óÀ» °ËÁ¤À¸·Î ¼³Á¤
-        board(g); // º¸µå ±×¸®±â
-        drawStone(g); // µ¹ ±×¸®±â
+        super.paintComponent(g); // ë¶€ëª¨ í´ë˜ìŠ¤ì˜ paintComponentë¥¼ í˜¸ì¶œí•˜ì—¬ ë°°ê²½ì„ ì§€ì›ë‹ˆë‹¤.
+        setColorBlack(g); // ì„  ìƒ‰ìƒì„ ê²€ì •ìœ¼ë¡œ ì„¤ì •í•©ë‹ˆë‹¤.
+        drawBoard(g); // ë³´ë“œë¥¼ ê·¸ë¦½ë‹ˆë‹¤.
+        drawStones(g); // ëŒì„ ê·¸ë¦½ë‹ˆë‹¤.
     }
 
-    // º¸µå ±×¸®±â ¸Ş¼Òµå: º¸µåÀÇ °İÀÚ¸¦ ±×¸®±â. 
+    private void setColorBlack(Graphics g) {
+        g.setColor(Color.BLACK);
+    }
+
+    private void drawBoard(Graphics g) {
+        board(g); // ë³´ë“œ ê·¸ë¦¬ê¸° ë©”ì†Œë“œ í˜¸ì¶œ
+    }
+
+    private void drawStones(Graphics g) {
+        drawStone(g); // ëŒ ê·¸ë¦¬ê¸° ë©”ì†Œë“œ í˜¸ì¶œ
+    }
+
+    // ë³´ë“œ ê·¸ë¦¬ê¸° ë©”ì†Œë“œ: ë³´ë“œì˜ ê²©ìë¥¼ ê·¸ë¦½ë‹ˆë‹¤.
     public void board(Graphics g) {
         for (int i = 1; i <= size.getSize(); i++) {
-            g.drawLine(size.getCell(), i * size.getCell(), size.getCell() * size.getSize(), i * size.getCell()); // °¡·Î¼± ±×¸®±â
-            g.drawLine(i * size.getCell(), size.getCell(), i * size.getCell(), size.getCell() * size.getSize()); // ¼¼·Î¼± ±×¸®±â
+            drawHorizontalLine(g, i); // ê°€ë¡œì„  ê·¸ë¦¬ê¸°
+            drawVerticalLine(g, i); // ì„¸ë¡œì„  ê·¸ë¦¬ê¸°
         }
     }
 
-    // µ¹ ±×¸®±â ¸Ş¼Òµå: ¸Ê¿¡ ÀúÀåµÈ µ¹ Á¤º¸¸¦ ±â¹İÀ¸·Î µ¹À» ±×¸³´Ï´Ù.
+    private void drawHorizontalLine(Graphics g, int i) {
+        g.drawLine(size.getCell(), i * size.getCell(), size.getCell() * size.getSize(), i * size.getCell());
+    }
+
+    private void drawVerticalLine(Graphics g, int i) {
+        g.drawLine(i * size.getCell(), size.getCell(), i * size.getCell(), size.getCell() * size.getSize());
+    }
+
+    // ëŒ ê·¸ë¦¬ê¸° ë©”ì†Œë“œ: ë§µì— ì €ì¥ëœ ëŒ ì •ë³´ë¥¼ ê¸°ë°˜ìœ¼ë¡œ ëŒì„ ê·¸ë¦½ë‹ˆë‹¤.
     public void drawStone(Graphics g) {
         for (int y = 0; y < size.getSize(); y++) {
             for (int x = 0; x < size.getSize(); x++) {
-                if (map.getXY(y, x) != 0) { // ÇØ´ç À§Ä¡¿¡ µ¹ÀÌ ÀÖ´Â °æ¿ì
-                    drawColoredStone(g, x, y, map.getXY(y, x)); // µ¹À» ±×¸³´Ï´Ù.
+                if (map.getXY(y, x) != 0) {
+                    drawColoredStone(g, x, y, map.getXY(y, x));
                 }
             }
         }
     }
 
-    // »ö»óÀÌ ÀÖ´Â µ¹À» ±×¸®´Â ¸Ş¼Òµå: ÇÃ·¹ÀÌ¾îÀÇ ¹øÈ£¿¡ µû¶ó »ö»óÀ» ¼³Á¤ÇÏ°í µ¹À» ±×¸³´Ï´Ù.
+    // ìƒ‰ìƒì´ ìˆëŠ” ëŒì„ ê·¸ë¦¬ëŠ” ë©”ì†Œë“œ: í”Œë ˆì´ì–´ì˜ ë²ˆí˜¸ì— ë”°ë¼ ìƒ‰ìƒì„ ì„¤ì •í•˜ê³  ëŒì„ ê·¸ë¦½ë‹ˆë‹¤.
     public void drawColoredStone(Graphics g, int x, int y, int player) {
-        g.setColor(playerColors.get(player - 1)); // ÇÃ·¹ÀÌ¾î ¹øÈ£¿¡ µû¸¥ »ö»ó ¼³Á¤
-        g.fillOval((x + 1) * size.getCell() - STONE_SIZE / 2, (y) * size.getCell() - STONE_SIZE / 2, STONE_SIZE, STONE_SIZE); // µ¹ ±×¸®±â
+        g.setColor(getPlayerColor(player)); // í”Œë ˆì´ì–´ ë²ˆí˜¸ì— ë”°ë¥¸ ìƒ‰ìƒ ì„¤ì •
+        fillOvalForStone(g, x, y); // ëŒì„ ê·¸ë¦½ë‹ˆë‹¤.
+    }
+
+    private Color getPlayerColor(int player) {
+        return playerColors.get(player - 1); // í”Œë ˆì´ì–´ ìƒ‰ìƒì„ ë°˜í™˜í•©ë‹ˆë‹¤.
+    }
+
+    private void fillOvalForStone(Graphics g, int x, int y) {
+        g.fillOval((x + 1) * size.getCell() - STONE_SIZE / 2, (y) * size.getCell() - STONE_SIZE / 2, STONE_SIZE, STONE_SIZE);
     }
 }
