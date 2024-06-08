@@ -1,61 +1,119 @@
 package Omoke;
 
 public class Map {
-    private short[][] map; // °ÔÀÓ º¸µå »óÅÂ¸¦ ÀúÀåÇÏ´Â 2Â÷¿ø ¹è¿­
-    private final short[] players; // ÇÃ·¹ÀÌ¾îµéÀ» ÀúÀåÇÏ´Â ¹è¿­
-    private int currentPlayer; // ÇöÀç Â÷·ÊÀÎ ÇÃ·¹ÀÌ¾î ÀÎµ¦½º
-    private boolean checkBNW = true; // Èæ¹é Ã¼Å© º¯¼ö (»ç¿ëµÇÁö ¾ÊÀ½)
-    private SizeOfMap ms; // º¸µåÀÇ Å©±â¸¦ ÀúÀåÇÏ´Â °´Ã¼
+    private short[][] map; // ê²Œì„ ë³´ë“œ ìƒíƒœë¥¼ ì €ì¥í•˜ëŠ” 2ì°¨ì› ë°°ì—´
+    private final short[] players; // í”Œë ˆì´ì–´ë“¤ì„ ì €ì¥í•˜ëŠ” ë°°ì—´
+    private int currentPlayer; // í˜„ì¬ ì°¨ë¡€ì¸ í”Œë ˆì´ì–´ ì¸ë±ìŠ¤
+    private boolean checkBNW = true; // í‘ë°± ì²´í¬ ë³€ìˆ˜ (ì‚¬ìš©ë˜ì§€ ì•ŠìŒ)
+    private SizeOfMap ms; // ë³´ë“œì˜ í¬ê¸°ë¥¼ ì €ì¥í•˜ëŠ” ê°ì²´
 
-    // »ı¼ºÀÚ: º¸µå Å©±â¿Í ÇÃ·¹ÀÌ¾î ¼ö¸¦ ¹Ş¾Æ Map °´Ã¼¸¦ ÃÊ±âÈ­ÇÕ´Ï´Ù.
+    // ìƒì„±ì: ë³´ë“œ í¬ê¸°ì™€ í”Œë ˆì´ì–´ ìˆ˜ë¥¼ ë°›ì•„ Map ê°ì²´ë¥¼ ì´ˆê¸°í™”í•©ë‹ˆë‹¤.
     public Map(SizeOfMap ms, int playerCount) {
-        this.ms = ms; // º¸µå Å©±â ¼³Á¤
-        map = new short[ms.getSize()][]; // º¸µå Å©±â¸¸Å­ ¹è¿­ ÃÊ±âÈ­
+        this.ms = ms; // ë³´ë“œ í¬ê¸° ì„¤ì •
+        map = new short[ms.getSize()][]; // ë³´ë“œ í¬ê¸°ë§Œí¼ ë°°ì—´ ì´ˆê¸°í™”
         for (int i = 0; i < map.length; i++)
             map[i] = new short[ms.getSize()];
-        players = new short[playerCount]; // ÇÃ·¹ÀÌ¾î ¹è¿­ ÃÊ±âÈ­
+        players = new short[playerCount]; // í”Œë ˆì´ì–´ ë°°ì—´ ì´ˆê¸°í™”
         for (short i = 0; i < playerCount; i++)
-            players[i] = (short) (i + 1); // ÇÃ·¹ÀÌ¾î ¹øÈ£ ¼³Á¤ (1ºÎÅÍ ½ÃÀÛ)
-        currentPlayer = 0; // ÇöÀç ÇÃ·¹ÀÌ¾î ÃÊ±âÈ­
+            players[i] = (short) (i + 1); // í”Œë ˆì´ì–´ ë²ˆí˜¸ ì„¤ì • (1ë¶€í„° ì‹œì‘)
+        currentPlayer = 0; // í˜„ì¬ í”Œë ˆì´ì–´ ì´ˆê¸°í™”
     }
 
-    // ÇöÀç ÇÃ·¹ÀÌ¾î¸¦ ¹İÈ¯ÇÕ´Ï´Ù.
+    // í˜„ì¬ í”Œë ˆì´ì–´ë¥¼ ë°˜í™˜
     public short getCurrentPlayer() {
         return players[currentPlayer];
     }
 
-    // (y, x) À§Ä¡ÀÇ º¸µå »óÅÂ¸¦ ¹İÈ¯ÇÕ´Ï´Ù.
+    // (y, x) ìœ„ì¹˜ì˜ ë³´ë“œ ìƒíƒœë¥¼ ë°˜í™˜
     public short getXY(int y, int x) {
         return map[y][x];
     }
 
-    // ´ÙÀ½ ÇÃ·¹ÀÌ¾î·Î Â÷·Ê¸¦ ³Ñ±é´Ï´Ù.
+    // ë‹¤ìŒ í”Œë ˆì´ì–´ë¡œ ì°¨ë¡€ë¥¼ ë„˜ê¹€
     public void nextPlayer() {
         currentPlayer = (currentPlayer + 1) % players.length;
     }
 
-    // (y, x) À§Ä¡¿¡ ÇöÀç ÇÃ·¹ÀÌ¾îÀÇ µ¹À» ³õ½À´Ï´Ù.
+    // (y, x) ìœ„ì¹˜ì— í˜„ì¬ í”Œë ˆì´ì–´ì˜ ëŒì„ ë†“ëŠ”ë‹¤.
     public void setMap(int y, int x) {
         map[y][x] = players[currentPlayer];
     }
 
-    // Æ¯Á¤ À§Ä¡¿¡¼­ ½Â¸® Á¶°ÇÀ» È®ÀÎÇÕ´Ï´Ù.
+    // íŠ¹ì • ìœ„ì¹˜ì—ì„œ ìŠ¹ë¦¬ ì¡°ê±´ì„ í™•ì¸í•˜ëŠ” ë³€ìˆ˜ 
     public boolean winCheck(int x, int y) {
-        if (winCheckL(x, y) || winCheckLD(x, y) || winCheckLU(x, y) || winCheckR(x, y)
-        		
-            || winCheckRD(x, y) || winCheckRU(x, y) || winCheckUp(x, y) || winCheckDown(x, y)
-            
-            || winCheckOneDown(x, y) || winCheckOneL(x, y) || winCheckOneLD(x, y) || winCheckOneLU(x, y)
-            
-            || winCheckOneR(x, y) || winCheckOneRD(x, y) || winCheckOneUp(x, y) || winCheckOneRU(x, y)
-            
-            || winCheckCenterLU(x, y) || winCheckCenterRL(x, y) || winCheckCenterRU(x, y) || winCheckCenterUD(x, y))
+        // ì™¼ìª½ ë°©í–¥ì—ì„œ ìŠ¹ë¦¬ ì¡°ê±´ì„ í™•ì¸
+        boolean checkL = winCheckL(x, y);
+        
+        // ì™¼ìª½-ì•„ë˜ ëŒ€ê°ì„  ë°©í–¥ì—ì„œ ìŠ¹ë¦¬ ì¡°ê±´ì„ í™•ì¸
+        boolean checkLD = winCheckLD(x, y);
+        
+        // ì™¼ìª½-ìœ„ ëŒ€ê°ì„  ë°©í–¥ì—ì„œ ìŠ¹ë¦¬ ì¡°ê±´ì„ í™•ì¸
+        boolean checkLU = winCheckLU(x, y);
+        
+        // ì˜¤ë¥¸ìª½ ë°©í–¥ì—ì„œ ìŠ¹ë¦¬ ì¡°ê±´ì„ í™•ì¸
+        boolean checkR = winCheckR(x, y);
+        
+        // ì˜¤ë¥¸ìª½-ì•„ë˜ ëŒ€ê°ì„  ë°©í–¥ì—ì„œ ìŠ¹ë¦¬ ì¡°ê±´ì„ í™•ì¸
+        boolean checkRD = winCheckRD(x, y);
+        
+        // ì˜¤ë¥¸ìª½-ìœ„ ëŒ€ê°ì„  ë°©í–¥ì—ì„œ ìŠ¹ë¦¬ ì¡°ê±´ì„ í™•ì¸
+        boolean checkRU = winCheckRU(x, y);
+        
+        // ìœ„ìª½ ë°©í–¥ì—ì„œ ìŠ¹ë¦¬ ì¡°ê±´ì„ í™•ì¸
+        boolean checkUp = winCheckUp(x, y);
+        
+        // ì•„ë˜ìª½ ë°©í–¥ì—ì„œ ìŠ¹ë¦¬ ì¡°ê±´ì„ í™•ì¸
+        boolean checkDown = winCheckDown(x, y);
+        
+        // í•œ ì¹¸ ì•„ë˜ì—ì„œ ìŠ¹ë¦¬ ì¡°ê±´ì„ í™•ì¸
+        boolean checkOneDown = winCheckOneDown(x, y);
+        
+        // í•œ ì¹¸ ì™¼ìª½ì—ì„œ ìŠ¹ë¦¬ ì¡°ê±´ì„ í™•ì¸
+        boolean checkOneL = winCheckOneL(x, y);
+        
+        // í•œ ì¹¸ ì™¼ìª½-ì•„ë˜ ëŒ€ê°ì„ ì—ì„œ ìŠ¹ë¦¬ ì¡°ê±´ì„ í™•ì¸
+        boolean checkOneLD = winCheckOneLD(x, y);
+        
+        // í•œ ì¹¸ ì™¼ìª½-ìœ„ ëŒ€ê°ì„ ì—ì„œ ìŠ¹ë¦¬ ì¡°ê±´ì„ í™•ì¸
+        boolean checkOneLU = winCheckOneLU(x, y);
+        
+        // í•œ ì¹¸ ì˜¤ë¥¸ìª½ì—ì„œ ìŠ¹ë¦¬ ì¡°ê±´ì„ í™•ì¸
+        boolean checkOneR = winCheckOneR(x, y);
+        
+        // í•œ ì¹¸ ì˜¤ë¥¸ìª½-ì•„ë˜ ëŒ€ê°ì„ ì—ì„œ ìŠ¹ë¦¬ ì¡°ê±´ì„ í™•ì¸
+        boolean checkOneRD = winCheckOneRD(x, y);
+        
+        // í•œ ì¹¸ ìœ„ìª½ì—ì„œ ìŠ¹ë¦¬ ì¡°ê±´ì„ í™•ì¸
+        boolean checkOneUp = winCheckOneUp(x, y);
+        
+        // í•œ ì¹¸ ì˜¤ë¥¸ìª½-ìœ„ ëŒ€ê°ì„ ì—ì„œ ìŠ¹ë¦¬ ì¡°ê±´ì„ í™•ì¸
+        boolean checkOneRU = winCheckOneRU(x, y);
+        
+        // ì¤‘ì‹¬ì„ ê¸°ì¤€ìœ¼ë¡œ ì™¼ìª½-ìœ„ ë°©í–¥ì—ì„œ ìŠ¹ë¦¬ ì¡°ê±´ì„ í™•ì¸
+        boolean checkCenterLU = winCheckCenterLU(x, y);
+        
+        // ì¤‘ì‹¬ì„ ê¸°ì¤€ìœ¼ë¡œ ì˜¤ë¥¸ìª½-ì™¼ìª½ ë°©í–¥ì—ì„œ ìŠ¹ë¦¬ ì¡°ê±´ì„ í™•ì¸
+        boolean checkCenterRL = winCheckCenterRL(x, y);
+        
+        // ì¤‘ì‹¬ì„ ê¸°ì¤€ìœ¼ë¡œ ì˜¤ë¥¸ìª½-ìœ„ ë°©í–¥ì—ì„œ ìŠ¹ë¦¬ ì¡°ê±´ì„ í™•ì¸
+        boolean checkCenterRU = winCheckCenterRU(x, y);
+        
+        // ì¤‘ì‹¬ì„ ê¸°ì¤€ìœ¼ë¡œ ìœ„-ì•„ë˜ ë°©í–¥ì—ì„œ ìŠ¹ë¦¬ ì¡°ê±´ì„ í™•ì¸
+        boolean checkCenterUD = winCheckCenterUD(x, y);
+
+        // ìœ„ì˜ ì¡°ê±´ë“¤ ì¤‘ í•˜ë‚˜ë¼ë„ ë§Œì¡±í•˜ë©´ trueë¥¼ ë°˜í™˜, ê·¸ë ‡ì§€ ì•Šìœ¼ë©´ falseë¥¼ ë°˜í™˜
+        if (checkL || checkLD || checkLU || checkR || checkRD || checkRU ||
+            checkUp || checkDown || checkOneDown || checkOneL || checkOneLD || 
+            checkOneLU || checkOneR || checkOneRD || checkOneUp || checkOneRU || 
+            checkCenterLU || checkCenterRL || checkCenterRU || checkCenterUD) {
             return true;
-        else
+        } else {
             return false;
+        }
     }
 
-    // À§ÂÊ ¹æÇâÀ¸·Î 5°³ÀÇ µ¹ÀÌ °°ÀºÁö È®ÀÎÇÕ´Ï´Ù.
+
+    // ìœ„ìª½ ë°©í–¥ìœ¼ë¡œ 5ê°œì˜ ëŒì´ ê°™ì€ì§€ í™•ì¸í•©ë‹ˆë‹¤.
     public boolean winCheckUp(int x, int y) {
         try {
             for (int i = y; i < y + 5; i++) {
@@ -68,7 +126,7 @@ public class Map {
         return true;
     }
 
-    // ¾Æ·¡ÂÊ ¹æÇâÀ¸·Î 5°³ÀÇ µ¹ÀÌ °°ÀºÁö È®ÀÎÇÕ´Ï´Ù.
+    // ì•„ë˜ìª½ ë°©í–¥ìœ¼ë¡œ 5ê°œì˜ ëŒì´ ê°™ì€ì§€ í™•ì¸í•©ë‹ˆë‹¤.
     public boolean winCheckDown(int x, int y) {
         try {
             for (int i = y; i > y - 5; i--) {
@@ -81,7 +139,7 @@ public class Map {
         return true;
     }
 
-    // ¿À¸¥ÂÊ À§ ´ë°¢¼± ¹æÇâÀ¸·Î 5°³ÀÇ µ¹ÀÌ °°ÀºÁö È®ÀÎÇÕ´Ï´Ù.
+    // ì˜¤ë¥¸ìª½ ìœ„ ëŒ€ê°ì„  ë°©í–¥ìœ¼ë¡œ 5ê°œì˜ ëŒì´ ê°™ì€ì§€ í™•ì¸í•©ë‹ˆë‹¤.
     public boolean winCheckRU(int x, int y) {
         try {
             for (int i = y, z = x; i > y - 5; i--, z++) {
@@ -94,7 +152,7 @@ public class Map {
         return true;
     }
 
-    // ¿ŞÂÊ À§ ´ë°¢¼± ¹æÇâÀ¸·Î 5°³ÀÇ µ¹ÀÌ °°ÀºÁö È®ÀÎÇÕ´Ï´Ù.
+    // ì™¼ìª½ ìœ„ ëŒ€ê°ì„  ë°©í–¥ìœ¼ë¡œ 5ê°œì˜ ëŒì´ ê°™ì€ì§€ í™•ì¸í•©ë‹ˆë‹¤.
     public boolean winCheckLU(int x, int y) {
         try {
             for (int i = y, z = x; i > y - 5; i--, z--) {
@@ -107,7 +165,7 @@ public class Map {
         return true;
     }
 
-    // ¿À¸¥ÂÊ ¹æÇâÀ¸·Î 5°³ÀÇ µ¹ÀÌ °°ÀºÁö È®ÀÎÇÕ´Ï´Ù.
+    // ì˜¤ë¥¸ìª½ ë°©í–¥ìœ¼ë¡œ 5ê°œì˜ ëŒì´ ê°™ì€ì§€ í™•ì¸í•©ë‹ˆë‹¤.
     public boolean winCheckR(int x, int y) {
         try {
             for (int z = x; z < x + 5; z++) {
@@ -120,7 +178,7 @@ public class Map {
         return true;
     }
 
-    // ¿ŞÂÊ ¹æÇâÀ¸·Î 5°³ÀÇ µ¹ÀÌ °°ÀºÁö È®ÀÎÇÕ´Ï´Ù.
+    // ì™¼ìª½ ë°©í–¥ìœ¼ë¡œ 5ê°œì˜ ëŒì´ ê°™ì€ì§€ í™•ì¸í•©ë‹ˆë‹¤.
     public boolean winCheckL(int x, int y) {
         try {
             for (int z = x; z > x - 5; z--) {
@@ -133,7 +191,7 @@ public class Map {
         return true;
     }
 
-    // ¿À¸¥ÂÊ ¾Æ·¡ ´ë°¢¼± ¹æÇâÀ¸·Î 5°³ÀÇ µ¹ÀÌ °°ÀºÁö È®ÀÎÇÕ´Ï´Ù.
+    // ì˜¤ë¥¸ìª½ ì•„ë˜ ëŒ€ê°ì„  ë°©í–¥ìœ¼ë¡œ 5ê°œì˜ ëŒì´ ê°™ì€ì§€ í™•ì¸í•©ë‹ˆë‹¤.
     public boolean winCheckRD(int x, int y) {
         try {
             for (int i = y, z = x; i < y + 5; i++, z++) {
@@ -146,7 +204,7 @@ public class Map {
         return true;
     }
 
-    // ¿ŞÂÊ ¾Æ·¡ ´ë°¢¼± ¹æÇâÀ¸·Î 5°³ÀÇ µ¹ÀÌ °°ÀºÁö È®ÀÎÇÕ´Ï´Ù.
+    // ì™¼ìª½ ì•„ë˜ ëŒ€ê°ì„  ë°©í–¥ìœ¼ë¡œ 5ê°œì˜ ëŒì´ ê°™ì€ì§€ í™•ì¸í•©ë‹ˆë‹¤.
     public boolean winCheckLD(int x, int y) {
         try {
             for (int i = y, z = x; i < y + 5; i++, z--) {
@@ -159,7 +217,7 @@ public class Map {
         return true;
     }
 
-    // ÇÑ Ä­ À§ÂÊ ¹æÇâÀ¸·Î 5°³ÀÇ µ¹ÀÌ °°ÀºÁö È®ÀÎÇÕ´Ï´Ù.
+    // í•œ ì¹¸ ìœ„ìª½ ë°©í–¥ìœ¼ë¡œ 5ê°œì˜ ëŒì´ ê°™ì€ì§€ í™•ì¸í•©ë‹ˆë‹¤.
     public boolean winCheckOneUp(int x, int y) {
         try {
             for (int i = y - 1; i < y + 4; i++) {
@@ -172,7 +230,7 @@ public class Map {
         return true;
     }
 
-    // ÇÑ Ä­ ¾Æ·¡ÂÊ ¹æÇâÀ¸·Î 5°³ÀÇ µ¹ÀÌ °°ÀºÁö È®ÀÎÇÕ´Ï´Ù.
+    // í•œ ì¹¸ ì•„ë˜ìª½ ë°©í–¥ìœ¼ë¡œ 5ê°œì˜ ëŒì´ ê°™ì€ì§€ í™•ì¸í•©ë‹ˆë‹¤.
     public boolean winCheckOneDown(int x, int y) {
         try {
             for (int i = y + 1; i > y - 4; i--) {
@@ -185,7 +243,7 @@ public class Map {
         return true;
     }
 
-    // ÇÑ Ä­ ¿À¸¥ÂÊ À§ ´ë°¢¼± ¹æÇâÀ¸·Î 5°³ÀÇ µ¹ÀÌ °°ÀºÁö È®ÀÎÇÕ´Ï´Ù.
+    // í•œ ì¹¸ ì˜¤ë¥¸ìª½ ìœ„ ëŒ€ê°ì„  ë°©í–¥ìœ¼ë¡œ 5ê°œì˜ ëŒì´ ê°™ì€ì§€ í™•ì¸í•©ë‹ˆë‹¤.
     public boolean winCheckOneRU(int x, int y) {
         try {
             for (int i = y + 1, z = x - 1; i > y - 4; i--, z++) {
@@ -198,7 +256,7 @@ public class Map {
         return true;
     }
 
-    // ÇÑ Ä­ ¿ŞÂÊ À§ ´ë°¢¼± ¹æÇâÀ¸·Î 5°³ÀÇ µ¹ÀÌ °°ÀºÁö È®ÀÎÇÕ´Ï´Ù.
+    // í•œ ì¹¸ ì™¼ìª½ ìœ„ ëŒ€ê°ì„  ë°©í–¥ìœ¼ë¡œ 5ê°œì˜ ëŒì´ ê°™ì€ì§€ í™•ì¸í•©ë‹ˆë‹¤.
     public boolean winCheckOneLU(int x, int y) {
         try {
             for (int i = y + 1, z = x + 1; i > y - 4; i--, z--) {
@@ -211,7 +269,7 @@ public class Map {
         return true;
     }
 
-    // ÇÑ Ä­ ¿À¸¥ÂÊ ¹æÇâÀ¸·Î 5°³ÀÇ µ¹ÀÌ °°ÀºÁö È®ÀÎÇÕ´Ï´Ù.
+    // í•œ ì¹¸ ì˜¤ë¥¸ìª½ ë°©í–¥ìœ¼ë¡œ 5ê°œì˜ ëŒì´ ê°™ì€ì§€ í™•ì¸í•©ë‹ˆë‹¤.
     public boolean winCheckOneR(int x, int y) {
         try {
             for (int z = x - 1; z < x + 4; z++) {
@@ -224,7 +282,7 @@ public class Map {
         return true;
     }
 
-    // ÇÑ Ä­ ¿ŞÂÊ ¹æÇâÀ¸·Î 5°³ÀÇ µ¹ÀÌ °°ÀºÁö È®ÀÎÇÕ´Ï´Ù.
+    // í•œ ì¹¸ ì™¼ìª½ ë°©í–¥ìœ¼ë¡œ 5ê°œì˜ ëŒì´ ê°™ì€ì§€ í™•ì¸í•©ë‹ˆë‹¤.
     public boolean winCheckOneL(int x, int y) {
         try {
             for (int z = x + 1; z > x - 4; z--) {
@@ -237,7 +295,7 @@ public class Map {
         return true;
     }
 
-    // ÇÑ Ä­ ¿À¸¥ÂÊ ¾Æ·¡ ´ë°¢¼± ¹æÇâÀ¸·Î 5°³ÀÇ µ¹ÀÌ °°ÀºÁö È®ÀÎÇÕ´Ï´Ù.
+    // í•œ ì¹¸ ì˜¤ë¥¸ìª½ ì•„ë˜ ëŒ€ê°ì„  ë°©í–¥ìœ¼ë¡œ 5ê°œì˜ ëŒì´ ê°™ì€ì§€ í™•ì¸í•©ë‹ˆë‹¤.
     public boolean winCheckOneRD(int x, int y) {
         try {
             for (int i = y - 1, z = x - 1; i < y + 4; i++, z++) {
@@ -250,7 +308,7 @@ public class Map {
         return true;
     }
 
-    // ÇÑ Ä­ ¿ŞÂÊ ¾Æ·¡ ´ë°¢¼± ¹æÇâÀ¸·Î 5°³ÀÇ µ¹ÀÌ °°ÀºÁö È®ÀÎÇÕ´Ï´Ù.
+    // í•œ ì¹¸ ì™¼ìª½ ì•„ë˜ ëŒ€ê°ì„  ë°©í–¥ìœ¼ë¡œ 5ê°œì˜ ëŒì´ ê°™ì€ì§€ í™•ì¸í•©ë‹ˆë‹¤.
     public boolean winCheckOneLD(int x, int y) {
         try {
             for (int i = y - 1, z = x + 1; i < y + 4; i++, z--) {
@@ -263,7 +321,7 @@ public class Map {
         return true;
     }
 
-    // Áß¾Ó À§¾Æ·¡ ¹æÇâÀ¸·Î 5°³ÀÇ µ¹ÀÌ °°ÀºÁö È®ÀÎÇÕ´Ï´Ù.
+    // ì¤‘ì•™ ìœ„ì•„ë˜ ë°©í–¥ìœ¼ë¡œ 5ê°œì˜ ëŒì´ ê°™ì€ì§€ í™•ì¸í•©ë‹ˆë‹¤.
     public boolean winCheckCenterUD(int x, int y) {
         try {
             for (int i = y - 2; i < y + 3; i++) {
@@ -276,7 +334,7 @@ public class Map {
         return true;
     }
 
-    // Áß¾Ó ÁÂ¿ì ¹æÇâÀ¸·Î 5°³ÀÇ µ¹ÀÌ °°ÀºÁö È®ÀÎÇÕ´Ï´Ù.
+    // ì¤‘ì•™ ì¢Œìš° ë°©í–¥ìœ¼ë¡œ 5ê°œì˜ ëŒì´ ê°™ì€ì§€ í™•ì¸í•©ë‹ˆë‹¤.
     public boolean winCheckCenterRL(int x, int y) {
         try {
             for (int z = x - 2; z < x + 3; z++) {
@@ -289,7 +347,7 @@ public class Map {
         return true;
     }
 
-    // Áß¾Ó ¿À¸¥ÂÊ ´ë°¢¼± ¹æÇâÀ¸·Î 5°³ÀÇ µ¹ÀÌ °°ÀºÁö È®ÀÎÇÕ´Ï´Ù.
+    // ì¤‘ì•™ ì˜¤ë¥¸ìª½ ëŒ€ê°ì„  ë°©í–¥ìœ¼ë¡œ 5ê°œì˜ ëŒì´ ê°™ì€ì§€ í™•ì¸í•©ë‹ˆë‹¤.
     public boolean winCheckCenterRU(int x, int y) {
         try {
             for (int i = y + 2, z = x - 2; i > y - 3; i--, z++) {
@@ -302,7 +360,7 @@ public class Map {
         return true;
     }
 
-    // Áß¾Ó ¿ŞÂÊ ´ë°¢¼± ¹æÇâÀ¸·Î 5°³ÀÇ µ¹ÀÌ °°ÀºÁö È®ÀÎÇÕ´Ï´Ù.
+    // ì¤‘ì•™ ì™¼ìª½ ëŒ€ê°ì„  ë°©í–¥ìœ¼ë¡œ 5ê°œì˜ ëŒì´ ê°™ì€ì§€ í™•ì¸í•©ë‹ˆë‹¤.
     public boolean winCheckCenterLU(int x, int y) {
         try {
             for (int i = y + 2, z = x + 2; i > y - 3; i--, z--) {
@@ -315,13 +373,13 @@ public class Map {
         return true;
     }
 
-    // °ÔÀÓ º¸µå¸¦ ÃÊ±âÈ­ÇÕ´Ï´Ù.
+    // ê²Œì„ ë³´ë“œë¥¼ ì´ˆê¸°í™”í•©ë‹ˆë‹¤.
     public void clear() {
         for (int i = 0; i < map.length; i++) {
             for (int j = 0; j < map[i].length; j++) {
-                map[i][j] = 0; // ¸ğµç À§Ä¡¸¦ ÃÊ±âÈ­ÇÕ´Ï´Ù.
+                map[i][j] = 0; // ëª¨ë“  ìœ„ì¹˜ë¥¼ ì´ˆê¸°í™”í•©ë‹ˆë‹¤.
             }
         }
-        currentPlayer = 0; // ÇöÀç ÇÃ·¹ÀÌ¾î¸¦ ÃÊ±âÈ­ÇÕ´Ï´Ù.
+        currentPlayer = 0; // í˜„ì¬ í”Œë ˆì´ì–´ë¥¼ ì´ˆê¸°í™”í•©ë‹ˆë‹¤.
     }
 }
