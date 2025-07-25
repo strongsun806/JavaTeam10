@@ -1,6 +1,6 @@
 # JavaTeam10
 
-경북대학교 자바 프로그래밍 24-1semester 001분반 Team 10 프로젝트 과제 입니다.
+ Team 10 프로젝트 과제
 
 # FlowChart
 ![image](https://github.com/strongsun806/JavaTeam10/assets/145644915/87197623-d3bf-465b-9b58-1066268a0ec2)
